@@ -1,3 +1,4 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -6,8 +7,10 @@ import org.testng.Reporter;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
+import static org.openqa.selenium.remote.ErrorCodes.TIMEOUT;
 
 
 public class testamazon {
@@ -21,15 +24,14 @@ public class testamazon {
 //                "C:\\Users\\ADMIN\\Documents\\chromedriver.exe");
 
         // Instantiate a ChromeDriver class.
+
+        WebDriverManager.chromedriver().setup();
         ChromeOptions ops = new ChromeOptions();
 
         ops.addArguments("--remote-allow-origins=*");
-        WebDriver driver = new ChromeDriver(ops);
-
-
-        // Maximize the browser
+        driver = new ChromeDriver(ops);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(TIMEOUT));
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
         // Launch Website
 
